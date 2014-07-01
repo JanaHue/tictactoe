@@ -3,14 +3,12 @@ var app = {
   playGame : function() {
 
     var player;
-    var count = 0;
 
     $('.box').on('click', function(event){
       event.preventDefault();
       if (!($(this).hasClass('x')) && !($(this).hasClass('o'))) {
-        count++;
-        console.log(count);
-        if (count % 2) {
+        app.count++;
+        if (app.count % 2) {
           $(this).addClass('x');
           player = 'x';
         } else {
@@ -19,15 +17,15 @@ var app = {
         }
       }
       //only run checkMatch if 5 moves have been made 
-      if (count >= 5) {
-        app.checkMatch(player, count);
+      if (app.count >= 5) {
+        app.checkMatch(player);
       }
       
     }); //click event listener
   
   }, //playGame
 
-  checkMatch : function(player, count) {
+  checkMatch : function(player) {
     console.log(player);
     //all possible winning combos
     var combos = [
@@ -55,7 +53,7 @@ var app = {
         if (!(selector.hasClass(player))) {
           console.log(player);
           match = false;
-          app.checkTie(count);
+          app.checkTie();
           break;
         }
       } //instance loop
@@ -66,8 +64,8 @@ var app = {
 
   }, //checkMatch
 
-  checkTie : function(count){
-    if (count === 9) {
+  checkTie : function(){
+    if (app.count === 9) {
       app.alertTie();
       app.closeModal();
     }
@@ -89,17 +87,21 @@ var app = {
     $('.overlay').on('click', function(){
       $('.overlay').fadeOut(
         //clear board, only after fadeOut completed
-        app.clearBoard()
+        app.resetGame()
       );
     });
   },
 
-  clearBoard : function(){
-    //on successful game, relfresh page
-    window.location.reload(true);
+  resetGame : function(){
+    //on successful game, refresh page
+    $('.box').removeClass('x o');
+    $('p.winner').empty();
+    app.init();
+
   },
 
   init : function(){
+    app.count = 0;
     app.playGame();  
     
   } // init
