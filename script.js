@@ -20,14 +20,15 @@ var app = {
       }
       //only run checkMatch if 5 moves have been made 
       if (count >= 5) {
-        app.checkMatch(player);
+        app.checkMatch(player, count);
       }
-    });
-  },
+      
+    }); //click event listener
+  
+  }, //playGame
 
-  checkMatch : function(player) {
+  checkMatch : function(player, count) {
     console.log(player);
-
     //all possible winning combos
     var combos = [
        ['a1', 'b1', 'c1'],
@@ -54,35 +55,48 @@ var app = {
         if (!(selector.hasClass(player))) {
           console.log(player);
           match = false;
+          app.checkTie(count);
           break;
         }
       } //instance loop
       if (match === true) {
         app.alertWinner(player);
       }
-
     } // combos loop
 
   }, //checkMatch
 
+  checkTie : function(count){
+    if (count === 9) {
+      app.alertTie();
+      app.closeModal();
+    }
+  },
+
   alertWinner : function(player) {
     var winner = (player).toUpperCase();
-    $('.overlay').fadeIn();
+    $('.overlay1').fadeIn();
     $('p.winner').append(winner +' wins!');
+    app.closeModal();
+  },
+
+  alertTie : function() {
+    $('.overlay2').fadeIn();
     app.closeModal();
   },
 
   closeModal : function() {
     $('.overlay').on('click', function(){
       $('.overlay').fadeOut(
+        //clear board, only after fadeOut completed
         app.clearBoard()
       );
     });
   },
 
   clearBoard : function(){
-    console.log($('.box'));
-    $('.box').removeClass('x o');
+    //on successful game, relfresh page
+    window.location.reload(true);
   },
 
   init : function(){
