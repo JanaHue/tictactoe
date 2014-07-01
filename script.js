@@ -58,18 +58,36 @@ var app = {
         }
       } //instance loop
       if (match === true) {
-        alert (player + ' wins');
+        app.alertWinner(player);
       }
 
     } // combos loop
 
   }, //checkMatch
 
+  alertWinner : function(player) {
+    var winner = (player).toUpperCase();
+    $('.overlay').fadeIn();
+    $('p.winner').append(winner +' wins!');
+    app.closeModal();
+  },
+
+  closeModal : function() {
+    $('.overlay').on('click', function(){
+      $('.overlay').fadeOut(
+        app.clearBoard()
+      );
+    });
+  },
+
+  clearBoard : function(){
+    console.log($('.box'));
+    $('.box').removeClass('x o');
+  },
 
   init : function(){
-  
-    app.playGame();
-  
+    app.playGame();  
+    
   } // init
 
 }; //namespace

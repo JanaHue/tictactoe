@@ -158,12 +158,12 @@ img {
   max-width: 100%; }
 
 body {
-  background: maroon;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333; }
 
 .board {
-  margin: 50px auto;
+  cursor: pointer;
+  margin: 200px auto;
   width: 300px;
   height: 300px;
   font-size: 18px;
@@ -178,8 +178,42 @@ body {
       float: left;
       border: 1px solid grey; }
 
+.x, .o {
+  font-size: 70px;
+  display: block;
+  text-align: center; }
+
 .x:before {
   content: "x"; }
 
 .o:before {
   content: "o"; }
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3); }
+
+.modal {
+  width: 350px;
+  height: 200px;
+  margin: 250px auto;
+  background: white;
+  text-align: center;
+  border-radius: 2px;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5); }
+  .modal p.winner {
+    padding: 70px 0;
+    font-size: 40px; }
+
+.close {
+  display: block;
+  float: right;
+  font-size: 30px;
+  font-weight: 100;
+  padding-right: 10px;
+  cursor: pointer; }
